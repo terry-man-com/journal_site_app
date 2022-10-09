@@ -6,13 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>article index</title>
     <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
-    <ul>
-        @foreach ($articles as $article)
-            <li><a href="/articles/{{ $article->id }}">{{ $article->title }}</a></li>
-            <br>
-        @endforeach
-    </ul>
+    <h1>
+        <b>論文一覧</b>
+    </h1>
+    @foreach ($articles as $article)
+        <p><a href="/articles/{{ $article->id }}">{{ $article->title }}</li></p>
+    @endforeach
+
+    <button onclick="location.href='/articles/create'">新規論文投稿</button>
 </body>
 </html>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 // Itemクラスを読み込む
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class ArticleController extends Controller
 {
@@ -16,7 +17,24 @@ class ArticleController extends Controller
         // Articleディレクトリーの中のindexページを指定し、articlesの連想配列を代入
         return view('articles.index', ['articles' => $articles]);
     }
-    
+
+    public function create()
+    {
+        return view('articles.create');
+    }
+
+    public function store(Request $request)
+    {
+        $article = new Article;
+
+        $article->title = $request->title;
+        $article->body = $request->body;
+        
+        $article->save();
+
+        return redirect('/articles');
+    }
+
     // showページへ移動
     public function show($id)
     {
