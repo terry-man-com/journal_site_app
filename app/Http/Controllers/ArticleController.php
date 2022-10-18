@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-// Itemクラスを読み込む
+// Articleクラスを読み込む
 use App\Models\Article;
-use Illuminate\Http\Request;
+use App\Http\Requests\ArticleRequest;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class ArticleController extends Controller
@@ -23,7 +23,7 @@ class ArticleController extends Controller
         return view('articles.create');
     }
 
-    public function store(Request $request)
+    public function store(ArticleRequest $request)
     {
         $article = new Article;
 
@@ -40,5 +40,31 @@ class ArticleController extends Controller
     {
         $article = Article::find($id);
         return view('articles.show', ['article' => $article]);
+    }
+
+    public function edit($id)
+    {
+        $article = Article::find($id);
+        return view('articles.edit', ['article' => $article]);
+    }
+
+    public function update(ArticleRequest $request, $id)
+    {
+        $article = Article::find($id);
+
+        $article->title = $request->title;
+        $article->body = $request->body;
+
+        $article->save();
+
+        return redirect('/articles');
+    }
+
+    public function destroy($id)
+    {
+        $article = Article::find($id);
+        $article->delete();
+
+        return redirect('/articles');
     }
 }
